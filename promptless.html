@@ -1,0 +1,778 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="author" content="Ayushi Raghave">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Promptless — Your team’s AI toolkit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400;500;600;700&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{--bg:#f5f5f2;--paper:#fff;--ink:#1c1d1b;--muted:#70736d;--line:#e5e6df;--accent:#d9ff67;--accent-ink:#182000;--purple:#7867f5;--danger:#b42318;--shadow:0 18px 55px #1b24100c}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button,input,textarea,select{font:inherit}button{cursor:pointer}.shell{max-width:1240px;margin:auto;padding:24px 28px 56px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:8px 0 28px}.brand{display:flex;align-items:center;gap:11px;font-weight:800;letter-spacing:-.7px;font-size:21px}.mark{width:35px;height:35px;border-radius:12px;background:var(--ink);color:var(--accent);display:grid;place-items:center;font-size:19px}.top-actions{display:flex;gap:10px;align-items:center}.subtle{color:var(--muted);font-size:13px}.btn{border:1px solid var(--line);background:#fff;border-radius:12px;padding:10px 14px;font-weight:650;color:var(--ink)}.btn:hover{border-color:#bfc2b6}.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}.hero{display:flex;justify-content:space-between;align-items:end;gap:24px;margin:12px 0 26px}.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:1.7px;font-weight:800;color:#62675a}.hero h1{font-size:clamp(34px,5vw,54px);line-height:1.04;letter-spacing:-2.4px;margin:9px 0 12px;max-width:700px}.hero p{color:var(--muted);margin:0;max-width:570px;font-size:16px}.pill{border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 12px;color:#55594f;font-size:12px;white-space:nowrap}.workspace{display:grid;grid-template-columns:minmax(320px,.88fr) minmax(0,1.12fr);gap:18px;align-items:stretch}.panel{background:var(--paper);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);min-width:0}.panel-head{padding:22px 23px 17px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:12px}.panel-head h2{margin:0;font-size:16px;letter-spacing:-.3px}.step{font-size:11px;color:var(--muted);font-weight:750;text-transform:uppercase;letter-spacing:1.1px}.panel-body{padding:22px 23px 24px}.tool-select{width:100%;min-height:50px;padding:14px 46px 14px 15px;border:1px solid #dfe1d8;border-radius:14px;background-color:#fbfbf8;color:var(--ink);font-weight:650;outline:none;appearance:none;cursor:pointer;box-shadow:0 1px 2px #1c1d1b08;background-image:url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2716%27 height=%2716%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27%231c1d1b%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27m6 9 6 6 6-6%27/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center;transition:border-color .18s,box-shadow .18s,background-color .18s}.tool-select:hover{background-color:#fff;border-color:#c8cbbf}.tool-select:focus-visible{border-color:var(--purple);box-shadow:0 0 0 4px #7867f526}.tool-select:focus,input:focus,textarea:focus,select:focus{border-color:var(--purple);box-shadow:0 0 0 3px #7867f51a}.tool-description{margin:11px 0 24px;color:var(--muted);font-size:13px}.fields{display:grid;gap:17px}.field label{display:flex;justify-content:space-between;gap:10px;font-weight:700;font-size:13px;margin-bottom:7px}.required{font-size:11px;color:var(--muted);font-weight:500}.field input,.field textarea,.field select{width:100%;border:1px solid #dfe1d8;border-radius:12px;background-color:#fff;padding:12px 13px;outline:none;color:var(--ink);transition:border-color .18s,box-shadow .18s}.field select{appearance:none;padding-right:40px;background-image:url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2714%27 height=%2714%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27%23585e52%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27m6 9 6 6 6-6%27/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 13px center;cursor:pointer}.field select option{padding:10px}.field textarea{min-height:105px;resize:vertical}.field input::placeholder,.field textarea::placeholder{color:#a0a39b}.field input[aria-invalid="true"],.field textarea[aria-invalid="true"]{border-color:#d9534f;background:#fffaf9;box-shadow:0 0 0 3px #d9534f12}.preset-chip[aria-pressed="true"]{background:#eaff9b;border-color:#a8c74e;color:#24310b;box-shadow:inset 0 0 0 1px #b8d65d}.form-footer{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:24px}.form-footer .btn{padding:13px 17px}.hint{font-size:12px;color:var(--muted)}.result-panel{display:flex;flex-direction:column;min-height:600px}.result-head-right{display:flex;gap:7px}.icon-btn{width:35px;height:35px;border:1px solid var(--line);background:#fff;border-radius:10px;display:grid;place-items:center;color:#51554d}.result-body{padding:22px 23px;display:flex;flex-direction:column;flex:1;min-height:0}.result-empty{flex:1;min-height:380px;border:1px dashed #dfe1d8;border-radius:16px;background:linear-gradient(145deg,#fcfcf9,#f8f9f4);display:flex;align-items:center;justify-content:center;text-align:center;padding:30px}.empty-icon{margin:0 auto 15px;width:53px;height:53px;border-radius:17px;background:#eff0e8;display:grid;place-items:center;font-size:23px}.result-empty h3{margin:0 0 7px;font-size:18px;letter-spacing:-.5px}.result-empty p{max-width:300px;color:var(--muted);margin:0;font-size:13px}.result-content{display:none;flex-direction:column;gap:14px;flex:1}.preview-tabs .active{background:var(--ink);color:#fff;border-color:var(--ink)}.rendered-markdown{white-space:normal;overflow-wrap:anywhere}.source-output{white-space:pre;overflow:auto;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:12px;line-height:1.65;tab-size:2}.source-output:focus{outline:2px solid #7867f5;outline-offset:1px}.rendered-markdown h1,.rendered-markdown h2,.rendered-markdown h3{line-height:1.25;letter-spacing:-.4px;margin:1.1em 0 .5em}.rendered-markdown p{margin:.6em 0}.rendered-markdown ul,.rendered-markdown ol{padding-left:1.5em}.rendered-markdown pre{overflow:auto;padding:14px;background:#1e201d;color:#f8f8f4;border-radius:10px}.rendered-markdown code{font-family:ui-monospace,monospace;font-size:.92em}.rendered-markdown :not(pre)>code{background:#f0f1eb;padding:2px 5px;border-radius:4px}.rendered-markdown blockquote{border-left:3px solid var(--purple);margin:1em 0;padding:.2em 1em;color:#62665d}.rendered-markdown .table-wrap{max-width:100%;overflow:auto}.rendered-markdown table{border-collapse:collapse;width:100%;min-width:440px}.rendered-markdown th,.rendered-markdown td{border:1px solid var(--line);padding:8px;text-align:left}.result-meta{display:flex;align-items:center;justify-content:space-between;gap:10px;color:var(--muted);font-size:12px}.status{display:inline-flex;align-items:center;gap:7px}.dot{width:7px;height:7px;background:#6d9a3a;border-radius:50%}.output{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.75;font-size:14px;outline:none;min-height:350px;max-height:calc(100vh - 320px);overflow:auto;padding:20px;border:1px solid var(--line);border-radius:14px;background:#fff}.output[contenteditable=true]:focus{border-color:var(--purple)}.result-actions{display:flex;gap:9px;flex-wrap:wrap}.notice{display:none;margin-top:15px;border-radius:12px;padding:12px 14px;font-size:13px}.notice.error{display:block;background:#fff0ee;color:var(--danger);border:1px solid #f4cbc6}.notice.info{display:block;background:#f3f2ff;color:#5144bb;border:1px solid #e0dcff}.loader{display:none;align-items:center;gap:12px;padding:18px 0;color:var(--muted);font-size:13px}.spinner{width:18px;height:18px;border:2px solid #e2e3dc;border-top-color:var(--purple);border-radius:50%;animation:spin .8s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}.settings-backdrop{display:none;position:fixed;inset:0;background:#17191470;z-index:5;padding:20px;align-items:center;justify-content:center}.settings-backdrop.open{display:flex}.settings{background:#fff;width:min(480px,100%);border-radius:20px;padding:24px;box-shadow:0 25px 80px #0002}.settings h2{margin:0 0 7px;font-size:21px}.settings p{color:var(--muted);font-size:13px;margin:0 0 20px}.settings label{font-size:13px;font-weight:700;display:block;margin-bottom:7px}.settings input{width:100%;border:1px solid var(--line);border-radius:10px;padding:12px;outline:none}.settings-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:18px}.footer{padding:22px 2px 0;display:flex;justify-content:space-between;gap:14px;color:var(--muted);font-size:12px}.maker-credit{font-size:10px;letter-spacing:.02em;color:#89909b}.kbd{font-family:ui-monospace,monospace;background:#eeefe9;border-radius:5px;padding:2px 5px}
+@media(max-width:850px){.shell{padding:16px}.hero{display:block}.hero .pill{display:inline-block;margin-top:18px}.workspace{grid-template-columns:1fr}.result-panel{min-height:500px}.result-empty{min-height:300px}.output{max-height:none}.topbar{padding-bottom:20px}}@media(max-width:480px){.topbar{align-items:flex-start}.top-actions .subtle{display:none}.hero h1{letter-spacing:-1.5px}.panel-head,.panel-body,.result-body{padding-left:17px;padding-right:17px}.form-footer{align-items:stretch;flex-direction:column}.form-footer .btn{width:100%}.footer{flex-direction:column}}
+
+/* Result panel expanded mode */
+.result-panel.is-expanded{
+  position:fixed!important;inset:12px!important;z-index:9999!important;
+  width:auto!important;height:auto!important;max-width:none!important;min-height:0!important;
+  margin:0!important;overflow:auto!important;background:var(--paper,#fff)!important;
+  box-shadow:0 0 0 9999px rgba(30,41,59,.58),8px 8px 0 #E2E8F0!important;
+}
+.result-panel.is-expanded .result-body{min-height:0;height:calc(100% - 74px);overflow:auto}
+.result-panel.is-expanded #resultContent{min-height:0}
+.result-panel.is-expanded #output,
+.result-panel.is-expanded #markdownPreview,
+.result-panel.is-expanded #htmlPreview{max-height:none!important;height:calc(100vh - 250px)!important;min-height:320px}
+body.promptless-expanded{overflow:hidden}
+#expandResult[aria-pressed="true"]{background:var(--yellow,#FBBF24);color:var(--ink,#1E293B)}
+@media(max-width:600px){
+ .result-panel.is-expanded{inset:6px!important}
+ .result-panel.is-expanded #output,
+ .result-panel.is-expanded #markdownPreview,
+ .result-panel.is-expanded #htmlPreview{height:calc(100vh - 230px)!important}
+}
+
+
+/* Promptless — refined product workspace */
+:root{
+  --dp-color-ground:#fcfcfd;
+  --dp-color-ink:#16191f;
+  --dp-color-ink-secondary:#454c58;
+  --dp-color-ground-muted:#f3f4f6;
+  --dp-color-rule:#dde0e6;
+  --dp-color-accent:#074ce0;
+  --dp-color-field:#16191f;
+  --dp-color-on-field:#fcfcfd;
+  --dp-color-on-field-secondary:#d0d4dd;
+  --dp-color-panel:#ffffff;
+  --dp-color-on-accent:#ffffff;
+  --dp-typography-body:16px;
+  --dp-typography-interface:15px;
+  --dp-typography-small:14px;
+  --dp-typography-metadata:13px;
+  --dp-typography-label:12px;
+  --dp-typography-body-leading:1.6;
+  --dp-spacing-grid-gap:24px;
+  --dp-radius-panel:12px;
+  --dp-border-hairline:1px;
+  --dp-motion-interaction:160ms;
+  --dp-motion-easing:ease-out;
+  --bg:var(--dp-color-ground);
+  --paper:var(--dp-color-panel);
+  --ink:var(--dp-color-ink);
+  --muted:var(--dp-color-ink-secondary);
+  --line:var(--dp-color-rule);
+  --accent:var(--dp-color-accent);
+  --accent-ink:#fff;
+  --purple:var(--dp-color-accent);
+  --shadow:0 8px 24px rgba(22,25,31,.045),0 1px 2px rgba(22,25,31,.035);
+}
+*{box-sizing:border-box}
+html{background:var(--dp-color-ground);scroll-behavior:smooth}
+body{
+  margin:0;background:var(--dp-color-ground);color:var(--dp-color-ink);
+  font:400 var(--dp-typography-body)/var(--dp-typography-body-leading) "Instrument Sans",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+}
+h1,h2,h3,.brand,.eyebrow,.step,.pill{font-family:"Host Grotesk","Instrument Sans",sans-serif}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+.shell{max-width:1320px;margin:0 auto;padding:28px 34px 42px}
+.topbar{
+  display:flex;align-items:center;justify-content:space-between;gap:20px;
+  padding:3px 0 22px;border-bottom:1px solid var(--dp-color-rule);margin:0 0 42px;
+}
+.brand{display:flex;align-items:center;gap:12px;font-size:21px;font-weight:700;letter-spacing:-.9px;color:var(--dp-color-ink)}
+.brand span span{color:var(--dp-color-accent)!important}
+.mark{
+  width:38px;height:38px;display:grid;place-items:center;border-radius:11px;
+  background:var(--dp-color-accent);color:#fff;font-size:21px;font-weight:600;
+  box-shadow:0 4px 10px rgba(7,76,224,.18);transform:none;
+}
+.top-actions{display:flex;align-items:center;gap:14px}
+.subtle{color:var(--dp-color-ink-secondary);font-size:var(--dp-typography-metadata);font-weight:500}
+.btn,.icon-btn{
+  border:1px solid var(--dp-color-rule);border-radius:9px;background:#fff;color:var(--dp-color-ink);
+  padding:10px 15px;font-size:var(--dp-typography-interface);font-weight:600;box-shadow:none;
+  transition:background-color var(--dp-motion-interaction) var(--dp-motion-easing),border-color var(--dp-motion-interaction) var(--dp-motion-easing),transform var(--dp-motion-interaction) var(--dp-motion-easing),box-shadow var(--dp-motion-interaction) var(--dp-motion-easing);
+}
+.btn:hover,.icon-btn:hover{border-color:#aeb8c9;background:#f7f9fc;transform:translateY(-1px);box-shadow:0 3px 8px rgba(22,25,31,.06)}
+.btn:active,.icon-btn:active{transform:translateY(0);box-shadow:none}
+.btn.primary{background:var(--dp-color-accent);border-color:var(--dp-color-accent);color:#fff;box-shadow:0 2px 4px rgba(7,76,224,.12)}
+.btn.primary:hover{background:#063fc0;border-color:#063fc0}
+.hero{
+  display:flex;justify-content:space-between;align-items:center;gap:38px;
+  margin:0 0 34px;padding:0;
+}
+.hero>div:first-child{flex:1.45;min-width:0}
+.hero .pill{flex:1;max-width:350px;white-space:normal;display:flex;align-items:center;justify-content:center;min-height:146px;padding:24px 26px;text-align:left;position:relative;overflow:hidden;
+  border:1px solid #d8e3fa;border-radius:14px;background:linear-gradient(140deg,#f4f7ff 0%,#eaf0ff 100%);color:#17356f;
+  font-size:15px;font-weight:600;letter-spacing:-.2px;text-transform:none;box-shadow:none;transform:none;line-height:1.5;
+}
+.hero .pill::before{content:"";position:absolute;width:155px;height:155px;border:1px solid rgba(7,76,224,.16);border-radius:50%;right:-22px;top:-48px}
+.hero .pill::after{content:"";position:absolute;width:78px;height:78px;border:1px solid rgba(7,76,224,.18);border-radius:22px;right:20px;bottom:-39px;transform:rotate(30deg)}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;padding:0;border:0;background:transparent;box-shadow:none;transform:none;
+  color:var(--dp-color-accent);font-size:11px;font-weight:700;letter-spacing:1.35px;text-transform:uppercase;
+}
+.eyebrow::before{content:"";width:18px;height:2px;background:var(--dp-color-accent);display:inline-block}
+.hero h1{
+  color:var(--dp-color-ink);font-size:clamp(42px,5vw,66px);line-height:1.02;letter-spacing:-3.3px;
+  font-weight:700;max-width:790px;margin:16px 0 17px;text-transform:none;
+}
+.hero h1 br{display:block}
+.hero p{max-width:610px;color:var(--dp-color-ink-secondary);font-size:17px;line-height:1.65;margin:0;font-weight:400}
+.workspace{display:grid;grid-template-columns:minmax(0,.94fr) minmax(0,1.06fr);gap:24px;align-items:stretch}
+.panel{
+  min-width:0;background:var(--dp-color-panel);border:1px solid var(--dp-color-rule);border-radius:var(--dp-radius-panel);
+  box-shadow:var(--shadow);overflow:hidden;animation:none;
+}
+.panel-head{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:20px 23px 18px;border-bottom:1px solid var(--dp-color-rule);background:#fff;
+}
+.panel-head h2{margin:0;color:var(--dp-color-ink);font-size:16px;letter-spacing:-.35px;font-weight:700;text-transform:none}
+.step{color:#687180;font-size:10px;font-weight:700;letter-spacing:1.35px;text-transform:uppercase;white-space:nowrap}
+.panel-body,.result-body{padding:23px}
+.tool-select,.field input,.field textarea,.field select,.settings input{
+  width:100%;border:1px solid #d4d9e2;border-radius:9px;background:#fff;color:var(--dp-color-ink);
+  padding:12px 13px;font-weight:400;outline:none;box-shadow:none;
+  transition:border-color var(--dp-motion-interaction) var(--dp-motion-easing),box-shadow var(--dp-motion-interaction) var(--dp-motion-easing),background-color var(--dp-motion-interaction) var(--dp-motion-easing);
+}
+.tool-select{background:#fff;font-weight:650;appearance:none;padding-right:44px;background-image:url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2716%27 height=%2716%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27%23585e52%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27m6 9 6 6 6-6%27/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 15px center;cursor:pointer;transition:border-color .18s,box-shadow .18s,background-color .18s}
+.tool-select:focus,.field input:focus,.field textarea:focus,.field select:focus,.settings input:focus{
+  border-color:var(--dp-color-accent);box-shadow:0 0 0 3px rgba(7,76,224,.12);background:#fff;
+}
+.field textarea{line-height:1.6;min-height:108px;resize:vertical}
+.field label,.settings label{
+  display:flex;justify-content:space-between;gap:10px;margin-bottom:7px;
+  color:var(--dp-color-ink);font-size:13px;font-weight:600;letter-spacing:0;text-transform:none;
+}
+.required{color:#747d8c;font-size:11px;font-weight:500}
+.tool-description{color:var(--dp-color-ink-secondary);font-size:13px;line-height:1.6;margin:11px 0 24px}
+.fields{gap:18px}
+.field input::placeholder,.field textarea::placeholder{color:#858d9a}
+.form-footer{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:24px;padding-top:19px;border-top:1px solid var(--dp-color-rule)}
+.form-footer .btn{padding:12px 16px;min-height:46px}
+.hint{color:#697281;font-size:12px;line-height:1.5}
+.result-panel{display:flex;flex-direction:column;min-height:620px}
+.result-head-right{display:flex;align-items:center;gap:10px}
+.icon-btn{width:36px;height:36px;padding:0;display:grid;place-items:center;border-radius:9px;font-size:19px}
+.result-body{display:flex;flex-direction:column;flex:1;min-height:0}
+.result-empty{
+  flex:1;min-height:380px;display:flex;align-items:center;justify-content:center;text-align:center;padding:32px;
+  border:1px dashed #cfd7e5;border-radius:10px;background:linear-gradient(145deg,#fbfcff,#f5f7fb);box-shadow:none;
+}
+.empty-icon{
+  width:54px;height:54px;display:grid;place-items:center;margin:0 auto 18px;
+  border:1px solid #d7e3ff;border-radius:15px;background:#eaf0ff;color:var(--dp-color-accent);
+  font-size:26px;box-shadow:none;transform:none;
+}
+.result-empty h3{color:var(--dp-color-ink);font-size:21px;line-height:1.2;letter-spacing:-.65px;font-weight:700;text-transform:none;margin:0 0 9px}
+.result-empty p{max-width:320px;margin:0 auto;color:var(--dp-color-ink-secondary);font-size:13px;line-height:1.65;font-weight:400}
+.result-content{gap:14px}
+.result-meta{display:flex;align-items:center;justify-content:space-between;gap:10px;color:#697281;font-size:12px;margin-bottom:2px}
+.status{display:inline-flex;align-items:center;gap:8px;font-weight:600}
+.dot{width:7px;height:7px;border-radius:50%;background:#21845a;border:0}
+.output,#markdownPreview,#htmlPreview{
+  width:100%;max-height:560px;border:1px solid var(--dp-color-rule)!important;border-radius:10px!important;
+  box-shadow:none!important;background:#fff;color:var(--dp-color-ink);
+}
+.output{padding:18px;white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.75;font-size:14px}
+.source-output{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:12px;line-height:1.7;white-space:pre;tab-size:2;overflow:auto}
+.output[contenteditable=true]:focus{border-color:var(--dp-color-accent)!important;outline:0;box-shadow:0 0 0 3px rgba(7,76,224,.12)!important}
+.rendered-markdown{font-family:"Instrument Sans",sans-serif;line-height:1.75}
+.rendered-markdown h1,.rendered-markdown h2,.rendered-markdown h3{font-family:"Host Grotesk",sans-serif;color:var(--dp-color-ink);letter-spacing:-.5px}
+.rendered-markdown blockquote{border-left:3px solid var(--dp-color-accent);color:var(--dp-color-ink-secondary)}
+.rendered-markdown pre{background:var(--dp-color-field);color:var(--dp-color-on-field);border-radius:8px}
+.rendered-markdown :not(pre)>code{background:var(--dp-color-ground-muted);color:#17356f}
+.rendered-markdown table{min-width:440px}
+.rendered-markdown th{background:var(--dp-color-ground-muted)}
+.preview-tabs{gap:6px!important}
+.preview-tabs .btn{padding:8px 12px;font-size:13px}
+.preview-tabs .active{background:var(--dp-color-ink)!important;color:#fff!important;border-color:var(--dp-color-ink)!important;box-shadow:none}
+.result-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.result-actions .btn{min-height:41px}
+.notice{border:1px solid var(--dp-color-rule);border-radius:9px;padding:12px 14px;font-size:13px;box-shadow:none}
+.notice.error{background:#fff1f0;color:#8f211b;border-color:#f0c7c3}
+ .notice.info{background:#edf3ff;color:#17356f;border-color:#cbdaf9}
+/* Friendly, short-lived feedback toast */
+#resultNotice.notice{display:none;position:fixed;right:24px;bottom:24px;z-index:10020;width:min(390px,calc(100vw - 32px));margin:0;padding:16px 18px 16px 50px;border-radius:16px;font-size:13px;line-height:1.5;font-weight:550;box-shadow:0 18px 55px rgba(24,32,48,.16);backdrop-filter:blur(14px);animation:toastIn .22s cubic-bezier(.2,.8,.2,1) both}
+#resultNotice.notice::before{position:absolute;left:17px;top:16px;width:22px;height:22px;display:grid;place-items:center;border-radius:50%;font-size:13px;font-weight:800}
+#resultNotice.notice.error{display:block;background:#fff;border:1px solid #f1d7d4;color:#71332e}
+#resultNotice.notice.error::before{content:'!';background:#fff0ed;color:#c34d42}
+#resultNotice.notice.info{display:block;background:#fff;border:1px solid #d8e4ff;color:#24416f}
+#resultNotice.notice.info::before{content:'✓';background:#edf4ff;color:#2458b8}
+#resultNotice.notice.toast-out{animation:toastOut .2s ease forwards}
+@keyframes toastIn{from{opacity:0;transform:translateY(10px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes toastOut{to{opacity:0;transform:translateY(8px) scale(.98)}}
+@media(max-width:520px){#resultNotice.notice{right:12px;bottom:12px;width:calc(100vw - 24px)}}
+@media(prefers-reduced-motion:reduce){#resultNotice.notice,#resultNotice.notice.toast-out{animation:none}}
+.loader{display:none;align-items:center;gap:12px;padding:18px 0;color:var(--dp-color-ink-secondary);font-size:13px;font-weight:600;text-transform:none;letter-spacing:0}
+.spinner{width:18px;height:18px;border:2px solid #dce4f4;border-top-color:var(--dp-color-accent);border-radius:50%;animation:spin .8s linear infinite}
+.settings-backdrop{background:rgba(16,23,38,.52);backdrop-filter:blur(3px)}
+.settings,.settings-card,.settings-backdrop .settings-card{
+  width:min(480px,100%);padding:26px;background:#fff;border:1px solid var(--dp-color-rule);
+  border-radius:14px;box-shadow:0 24px 70px rgba(12,20,38,.2);
+}
+.settings h2,.settings-card h3{font-family:"Host Grotesk",sans-serif;color:var(--dp-color-ink);font-size:22px;letter-spacing:-.7px;text-transform:none;margin:0 0 7px}
+.settings p{color:var(--dp-color-ink-secondary);font-size:13px;line-height:1.6;margin:0 0 20px}
+.settings-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:18px}
+.kbd{font-family:ui-monospace,monospace;background:#f0f2f6;border:1px solid #d9dee7;border-radius:5px;padding:2px 5px;color:#3d4654;font-size:11px}
+.footer{display:flex;justify-content:space-between;gap:14px;margin-top:28px;padding:18px 1px 0;border-top:1px solid var(--dp-color-rule);color:#697281;font-size:12px;font-weight:400}
+a{color:var(--dp-color-accent)}
+button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{
+  outline:3px solid rgba(7,76,224,.42);outline-offset:3px;
+}
+.result-panel.is-expanded{
+  position:fixed!important;inset:12px!important;z-index:9999!important;width:auto!important;height:auto!important;
+  max-width:none!important;min-height:0!important;margin:0!important;overflow:auto!important;background:#fff!important;
+  box-shadow:0 0 0 9999px rgba(16,23,38,.58),var(--shadow)!important;
+}
+.result-panel.is-expanded .result-body{min-height:0;height:calc(100% - 74px);overflow:auto}
+.result-panel.is-expanded #resultContent{min-height:0}
+.result-panel.is-expanded #output,.result-panel.is-expanded #markdownPreview,.result-panel.is-expanded #htmlPreview{max-height:none!important;height:calc(100vh - 250px)!important;min-height:320px}
+body.promptless-expanded{overflow:hidden}
+#expandResult[aria-pressed="true"]{background:#eaf0ff;color:var(--dp-color-accent);border-color:#cbdaf9}
+@media(max-width:1050px){
+  .shell{padding:24px 24px 38px}
+  .hero{gap:24px}
+  .workspace{gap:18px}
+  .panel-body,.result-body{padding:20px}
+  .hero h1{font-size:clamp(40px,5.2vw,58px);letter-spacing:-2.7px}
+}
+@media(max-width:760px){
+  .shell{padding:18px 16px 30px}
+  .topbar{margin-bottom:30px;padding-bottom:18px}
+  .hero{display:block;margin-bottom:26px}
+  .hero h1{font-size:clamp(39px,8.5vw,56px);letter-spacing:-2.3px}
+  .hero p{font-size:16px}
+  .hero .pill{max-width:none;min-height:88px;margin-top:22px;padding:18px 20px}
+  .workspace{grid-template-columns:minmax(0,1fr);gap:18px}
+  .result-panel{min-height:520px}
+  .result-empty{min-height:300px}
+  .output{max-height:none}
+}
+@media(max-width:480px){
+  .topbar{align-items:flex-start;gap:12px}
+  .brand{font-size:19px}
+  .mark{width:34px;height:34px}
+  .top-actions{gap:8px}
+  .top-actions .subtle{display:none}
+  .top-actions .btn{padding:9px 11px;font-size:13px}
+  .hero h1{font-size:39px;letter-spacing:-2px}
+  .panel-head{padding:17px 16px}
+  .panel-body,.result-body{padding:16px}
+  .form-footer{align-items:stretch;flex-direction:column}
+  .form-footer .btn{width:100%}
+  .result-head-right{gap:6px}
+  .result-actions .btn{flex:1 1 auto}
+  .footer{flex-direction:column;gap:8px}
+  .result-panel.is-expanded{inset:6px!important}
+  .result-panel.is-expanded #output,.result-panel.is-expanded #markdownPreview,.result-panel.is-expanded #htmlPreview{height:calc(100vh - 230px)!important}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition:none!important;animation:none!important;scroll-behavior:auto!important}
+}
+
+
+/* Promptless first-run intro: a short transformation using the product's own UI language. */
+.intro-screen{position:fixed;inset:0;z-index:10000;display:grid;place-items:center;padding:24px;background:#fcfcfd;color:#16191f;opacity:1;visibility:visible;transition:opacity .48s ease,visibility .48s ease;font-family:"Instrument Sans",system-ui,sans-serif}
+.intro-screen.is-leaving{opacity:0;visibility:hidden;pointer-events:none}
+.intro-inner{width:min(760px,100%);position:relative}
+.intro-topline{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:clamp(34px,7vh,66px);font-size:12px;color:#687180;letter-spacing:.02em}
+.intro-brand{display:flex;align-items:center;gap:10px;color:#16191f;font:700 18px/1 "Host Grotesk","Instrument Sans",sans-serif;letter-spacing:-.6px}
+.intro-mark{width:31px;height:31px;display:grid;place-items:center;border-radius:9px;background:#074ce0;color:white;font-size:18px}
+.intro-skip{border:1px solid #dde0e6;background:#fff;border-radius:8px;padding:8px 11px;color:#454c58;font-size:12px;transition:background .16s,border-color .16s}
+.intro-skip:hover{background:#f3f6fc;border-color:#aeb8c9}
+.intro-stage{min-height:clamp(290px,43vh,390px);position:relative;display:flex;align-items:center;justify-content:center}
+.intro-card{width:min(680px,100%);border:1px solid #dde0e6;border-radius:13px;background:#fff;box-shadow:0 18px 48px rgba(22,25,31,.055);overflow:hidden;transform:translateY(8px);opacity:0;animation:intro-card-in .55s .2s cubic-bezier(.2,.75,.25,1) forwards}
+.intro-card-head{display:flex;align-items:center;justify-content:space-between;padding:14px 17px;border-bottom:1px solid #e7eaf0;font-size:12px;font-weight:650}
+.intro-card-head span:last-child{font-size:10px;letter-spacing:1px;color:#687180;font-weight:700}
+.intro-card-body{padding:18px}
+.intro-label{display:block;font-size:11px;font-weight:650;color:#454c58;margin-bottom:8px}
+.intro-input{min-height:58px;padding:12px 14px;border:1px solid #d4d9e2;border-radius:9px;background:#fbfcff;color:#454c58;font-size:13px;line-height:1.5}.intro-tool-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin-bottom:16px}.intro-tool{border:1px solid #dfe4ed;border-radius:9px;padding:10px 11px;background:#fff;opacity:0;transform:translateY(6px);animation:intro-tool-in .4s ease forwards}.intro-tool:nth-child(1){animation-delay:.55s}.intro-tool:nth-child(2){animation-delay:.72s}.intro-tool:nth-child(3){animation-delay:.89s}.intro-tool:nth-child(4){animation-delay:1.06s}.intro-tool b{display:block;font-size:12px;margin:5px 0 2px}.intro-tool small{display:block;color:#687180;font-size:10px;line-height:1.35}.intro-tool-icon{display:grid;place-items:center;width:25px;height:25px;border-radius:7px;background:#edf3ff;color:#074ce0;font-weight:800}.intro-result{margin-top:12px;padding:12px 14px;border:1px solid #dbe5fb;background:#f6f9ff;border-radius:9px;opacity:0;transform:translateY(5px);animation:intro-result-in .5s 2.5s ease forwards}.intro-result-head{display:flex;justify-content:space-between;gap:10px;align-items:center;font-size:10px;letter-spacing:.06em;font-weight:750;color:#31558f;margin-bottom:6px}.intro-result p{margin:0;font-size:13px;line-height:1.5;color:#202a3a}.intro-result .intro-ready{font-size:10px;color:#38704b;white-space:nowrap}
+.intro-rough{display:inline;animation:none}
+.intro-clean{display:block;color:#16191f;font-weight:550;animation:none}
+.intro-card-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:14px}
+.intro-status{display:flex;align-items:center;gap:7px;color:#687180;font-size:11px}
+.intro-status-dot{width:6px;height:6px;border-radius:50%;background:#074ce0;box-shadow:0 0 0 3px #074ce014}
+.intro-action{background:#074ce0;color:#fff;border-radius:8px;padding:9px 12px;font-size:11px;font-weight:650;opacity:0;transform:translateY(4px);animation:intro-action-in .35s 1.8s ease forwards}
+.intro-transformation{height:1px;background:#e4e8f0;position:relative;margin:0 18px;overflow:hidden}
+.intro-transformation::after{content:"";position:absolute;inset:0;background:#074ce0;transform:scaleX(0);transform-origin:left;animation:intro-rule 1.1s 2s cubic-bezier(.2,.75,.25,1) forwards}
+.intro-caption{margin-top:28px;text-align:center;min-height:64px}
+.intro-caption p{margin:0;color:#687180;font-size:12px;letter-spacing:.01em;opacity:0;animation:intro-caption-in .5s 2.7s ease forwards}
+.intro-wordmark{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:13px;opacity:0;transform:translateY(8px);animation:intro-wordmark-in .65s 3.65s cubic-bezier(.2,.75,.25,1) forwards}
+.intro-wordmark strong{font:700 clamp(30px,5vw,42px)/1 "Host Grotesk","Instrument Sans",sans-serif;letter-spacing:-2px}
+.intro-wordmark .intro-mark{width:34px;height:34px;border-radius:10px;font-size:20px}
+.intro-progress{position:absolute;left:0;right:0;bottom:-35px;height:2px;background:#e9edf4;overflow:hidden}
+.intro-progress span{display:block;width:100%;height:100%;background:#074ce0;transform:scaleX(0);transform-origin:left;animation:intro-progress 5.9s linear forwards}
+@keyframes intro-card-in{to{opacity:1;transform:translateY(0)}}
+@keyframes intro-tool-in{to{opacity:1;transform:translateY(0)}}
+@keyframes intro-result-in{to{opacity:1;transform:translateY(0)}}
+@keyframes intro-rough-out{to{opacity:0;filter:blur(2px)}}
+@keyframes intro-clean-in{0%{max-height:0;opacity:0;transform:translateY(5px)}100%{max-height:90px;opacity:1;transform:translateY(0)}}
+@keyframes intro-action-in{to{opacity:1;transform:translateY(0)}}
+@keyframes intro-rule{to{transform:scaleX(1)}}
+@keyframes intro-caption-in{to{opacity:1}}
+@keyframes intro-wordmark-in{to{opacity:1;transform:translateY(0)}}
+@keyframes intro-progress{to{transform:scaleX(1)}}
+@media(max-width:520px){.intro-screen{padding:19px}.intro-topline{margin-bottom:24px}.intro-stage{min-height:360px}.intro-card-body{padding:15px}.intro-card-head{padding:13px 15px}.intro-caption{margin-top:18px}.intro-progress{bottom:-25px}.intro-tool-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.intro-tool{display:grid;grid-template-columns:28px 1fr;column-gap:8px;padding:8px}.intro-tool-icon{grid-row:span 2}.intro-tool b{margin:0}.intro-tool small{font-size:9px}.intro-result{padding:10px}.intro-result p{font-size:12px}}
+@media(prefers-reduced-motion:reduce){.intro-screen,.intro-card,.intro-tool,.intro-result,.intro-rough,.intro-clean,.intro-action,.intro-transformation::after,.intro-caption p,.intro-wordmark,.intro-progress span{animation:none!important;transition:none!important}.intro-card,.intro-tool,.intro-result{opacity:1;transform:none}.intro-action,.intro-caption p,.intro-wordmark{opacity:1;transform:none}.intro-progress span{transform:scaleX(1)}}
+
+.preset-area{display:flex;flex-wrap:wrap;gap:7px;margin:-13px 0 20px}.preset-chip{border:1px solid #e4e6dc;background:#f7f8f2;color:#4d5247;border-radius:999px;padding:7px 10px;font-size:11px;font-weight:650;transition:transform .15s,border-color .15s,background .15s}.preset-chip:hover{transform:translateY(-1px);background:#eff3e4;border-color:#cbd4b9}.preset-label{width:100%;font-size:10px;text-transform:uppercase;letter-spacing:1.2px;color:#858a7d;font-weight:800;margin:0 0 1px}@media(prefers-reduced-motion:reduce){.preset-chip{transition:none}}
+</style>
+</head>
+<body>
+<div class="intro-screen" id="promptlessIntro" role="region" aria-label="Promptless introduction">
+  <div class="intro-inner">
+    <div class="intro-topline"><div class="intro-brand"><span class="intro-mark" aria-hidden="true">✳</span><span>Promptless</span></div><button class="intro-skip" id="skipIntro" type="button">Skip intro <span aria-hidden="true">↗</span></button></div>
+    <div class="intro-stage" aria-hidden="true">
+      <div class="intro-card">
+        <div class="intro-card-head"><span>Your team's AI toolkit</span><span>01 / CHOOSE A TOOL</span></div>
+        <div class="intro-card-body">
+          <div class="intro-tool-grid">
+            <div class="intro-tool"><span class="intro-tool-icon">✉</span><b>Cold Email Generator</b><small>Write outreach from a few details</small></div>
+            <div class="intro-tool"><span class="intro-tool-icon">⌘</span><b>Prompt Architect</b><small>Build a useful prompt from a goal</small></div>
+            <div class="intro-tool"><span class="intro-tool-icon">▧</span><b>Webpage Builder</b><small>Turn a brief into a webpage</small></div>
+            <div class="intro-tool"><span class="intro-tool-icon">≡</span><b>Brief Generator</b><small>Turn a rough request into a usable brief</small></div>
+          </div>
+          <span class="intro-label">02 / ADD YOUR DETAILS</span>
+          <div class="intro-input">Goal: introduce our new product to potential customers<br>Audience: small business owners · Tone: professional</div>
+          <div class="intro-card-foot"><span class="intro-status"><i class="intro-status-dot"></i>No prompt writing needed</span><span class="intro-action">Generate result ↗</span></div>
+          <div class="intro-result"><div class="intro-result-head"><span>03 / READY TO USE</span><span class="intro-ready">✓ Result prepared</span></div><p>Hi there, we're introducing a new tool designed to help small businesses save time on everyday work. I'd be happy to show you how it works.</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="intro-caption"><p>Choose a tool. Add your details. Get a usable result.</p><div class="intro-wordmark"><span class="intro-mark" aria-hidden="true">✳</span><strong>Promptless</strong></div></div>
+    <div class="intro-progress" aria-hidden="true"><span></span></div>
+  </div>
+</div>
+
+<div class="shell" id="productShell">
+  <header class="topbar">
+    <div class="brand"><div class="mark">✳</div><span>Promptless</span></div>
+    <div class="top-actions"><span class="subtle" id="connectionLabel">Webhook not configured</span><button class="btn" id="openSettings">⚙ Settings</button></div>
+  </header>
+  <section class="hero">
+    <div><div class="eyebrow">Your team's AI toolkit</div><h1>Useful AI tools.<br>Without the prompt wrangling.</h1><p>Choose a tool, add your details, and get a result you can use. No prompt engineering required.</p></div>
+    <div class="pill">A set of focused AI tools for everyday team tasks</div>
+  </section>
+  <main class="workspace">
+    <section class="panel">
+      <div class="panel-head"><h2>Choose a tool and add details</h2><span class="step">01 / INPUT</span></div>
+      <div class="panel-body">
+        <div class="field"><label for="toolSelect">Choose a tool</label><select class="tool-select" id="toolSelect"></select></div>
+        <p class="tool-description" id="toolDescription"></p><div id="presetArea" class="preset-area" aria-label="Quick starts"></div>
+        <form id="toolForm"><div class="fields" id="fields"></div><div class="form-footer"><span class="hint">Your details are sent to your configured workflow.</span><button class="btn primary" type="submit" id="generateBtn">Generate result ↗</button></div></form>
+        <div id="formNotice" class="notice" role="status" aria-live="polite"></div>
+      </div>
+    </section>
+    <section class="panel result-panel">
+      <div class="panel-head"><h2>Your result</h2><div class="result-head-right"><span class="step">02 / OUTPUT</span><button class="icon-btn" id="expandResult" title="Focus on result" aria-label="Focus on result">⤢</button></div></div>
+      <div class="result-body">
+        <div class="result-empty" id="emptyState"><div><div class="empty-icon">✧</div><h3>Your next good result starts here.</h3><p>Pick a tool, fill in the details, and your result will appear in this space.</p></div></div>
+        <div class="loader" id="loader"><div class="spinner"></div><span id="loaderText">Working on your result…</span></div>
+        <div class="result-content" id="resultContent">
+          <div class="result-meta"><span class="status"><span class="dot"></span><span id="resultStatus">Ready to use</span></span><span id="resultToolName"></span></div>
+          <div class="preview-tabs" id="previewTabs" style="display:none;gap:7px;margin-bottom:10px"><button class="btn active" id="previewTab">Preview</button><button class="btn" id="sourceTab">Source</button></div>
+          <iframe id="htmlPreview" title="Generated webpage preview" sandbox="allow-forms allow-modals allow-popups" referrerpolicy="no-referrer" style="display:none;width:100%;height:460px;border:1px solid var(--line);border-radius:14px;background:white"></iframe>
+          <div class="output" id="markdownPreview" style="display:none;white-space:normal" aria-label="Formatted result preview"></div>
+          <pre class="output source-output" id="output" contenteditable="true" spellcheck="false" aria-label="Generated result"></pre>
+          <div class="result-actions" id="resultActions"><button class="btn primary" id="copyBtn">Copy text</button><button class="btn" id="downloadBtn">Download</button><button class="btn" id="emailBtn" style="display:none">Open email draft</button><button class="btn" id="regenerateBtn">Try again</button><button class="btn" id="clearBtn">Clear</button></div>
+        </div>
+        <div id="resultNotice" class="notice" role="status" aria-live="polite"></div>
+        <div id="retryRow" style="display:none;margin-top:12px"><button class="btn" id="retryBtn">Try again</button><span class="hint" style="margin-left:10px">Your inputs are kept so you can retry without starting over.</span></div>
+      </div>
+    </section>
+  </main>
+  <footer class="footer"><span>Promptless · A simpler way to work with AI.</span><span class="maker-credit">Product concept &amp; design · Ayushi Raghave</span><span>Tip: <span class="kbd">Ctrl</span> + <span class="kbd">Enter</span> to generate</span></footer>
+</div>
+<div class="settings-backdrop" id="settingsBackdrop" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+  <div class="settings"><h2 id="settingsTitle">Connect your workflow</h2><p>Paste your n8n production webhook URL. It will be saved in this browser on this device.</p><label for="webhookUrl">Webhook URL</label><input id="webhookUrl" type="url" placeholder="https://your-n8n-domain.com/webhook/promptless" autocomplete="url"><div class="settings-actions"><button class="btn" id="cancelSettings">Cancel</button><button class="btn primary" id="saveSettings">Save connection</button></div><div id="settingsNotice" class="notice"></div></div>
+</div>
+<script>
+const TOOLS = {
+  cold_email: {
+    name: "Cold Email Generator", description: "Create relevant outreach that sounds human and has a clear purpose.",
+    fields: [
+      {name:"recipient",label:"Who are you contacting?",type:"text",placeholder:"e.g. A product leader at a SaaS company",required:true},
+      {name:"objective",label:"What do you want to achieve?",type:"textarea",placeholder:"Explain the reason for reaching out and the next step you want.",required:true},
+      {name:"context",label:"Useful context",type:"textarea",placeholder:"Add details about the person, product, or relationship (optional)."},
+      {name:"tone",label:"Tone",type:"select",options:["Professional","Friendly","Direct","Warm and thoughtful"],value:"Professional"}
+    ]
+  },
+  thread_generator: {
+    name: "Thread Generator", description: "Turn a topic or rough idea into a clear, engaging social thread.",
+    fields: [
+      {name:"topic",label:"What is the thread about?",type:"textarea",placeholder:"Share the idea, argument, or key points.",required:true},
+      {name:"platform",label:"Platform",type:"select",options:["X","LinkedIn"],value:"X"},
+      {name:"audience",label:"Who is it for?",type:"text",placeholder:"e.g. Startup founders, designers, product teams"},
+      {name:"length",label:"Length",type:"select",options:["Short (4–6 posts)","Medium (7–10 posts)","Long (11–15 posts)"],value:"Medium (7–10 posts)"}
+    ]
+  },
+  prompt_architect: {
+    name: "Prompt Architect", description: "Turn a goal into a reusable prompt with clear instructions, context, and output requirements.",
+    fields: [
+      {name:"goal",label:"What should the AI do?",type:"textarea",placeholder:"Describe the task and the result you want.",required:true},
+      {name:"context",label:"Relevant context",type:"textarea",placeholder:"Who will use it? What should the AI know?"},
+      {name:"output",label:"Ideal output format",type:"select",options:["Structured text","Checklist","Table","JSON","Choose the best format"],value:"Choose the best format"},
+      {name:"constraints",label:"Requirements or things to avoid",type:"textarea",placeholder:"Mention must-haves, limitations, and common failure modes."}
+    ]
+  },
+  webpage_builder: {
+    name: "Static Webpage Builder", description: "Turn a brief into a polished, responsive, self-contained webpage.",
+    fields: [
+      {name:"brief",label:"What should the page do?",type:"textarea",placeholder:"Describe the page, audience, content, and desired actions.",required:true,rows:5},
+      {name:"style",label:"Visual direction",type:"select",options:["Modern editorial","Minimal and clean","Bold and expressive","Professional product"],value:"Modern editorial"},
+      {name:"requirements",label:"Required sections or behavior",type:"textarea",placeholder:"e.g. Hero, pricing, FAQ, responsive navigation; no external libraries."},
+      {name:"deliverable",label:"Output",type:"select",options:["Complete single HTML file","HTML with embedded CSS and JavaScript","Accessible HTML structure"],value:"Complete single HTML file"}
+    ]
+  },
+  brief_generator: {
+    name: "Brief Generator", description: "Turn a rough request into a structured brief that a teammate or AI tool can act on.",
+    fields: [
+      {name:"request",label:"What needs to be done?",type:"textarea",placeholder:"Share the rough idea, request, or outcome you need to define.",required:true,rows:5},
+      {name:"audience",label:"Who will use the brief?",type:"text",placeholder:"e.g. A designer, developer, product team, or AI tool"},
+      {name:"context",label:"Background and relevant context",type:"textarea",placeholder:"What should the person know before starting?"},
+      {name:"deliverable",label:"Expected output",type:"text",placeholder:"e.g. A landing page, research summary, product feature"},
+      {name:"constraints",label:"Requirements and limits",type:"textarea",placeholder:"Must-haves, deadlines, tools, boundaries, or things to avoid."},
+      {name:"format",label:"Brief format",type:"select",options:["Concise action brief","Detailed project brief","Creative brief","AI-ready task brief"],value:"Concise action brief"}
+    ]
+  },
+  problem_solver: {
+    name: "Problem Solver", description: "Work through a difficult situation and turn it into a practical plan.",
+    fields: [
+      {name:"problem",label:"What problem are you facing?",type:"textarea",placeholder:"Describe what is happening and what you have tried.",required:true,rows:5},
+      {name:"desired_outcome",label:"What would a good outcome look like?",type:"textarea",placeholder:"Describe the result you want."},
+      {name:"constraints",label:"Constraints and limits",type:"textarea",placeholder:"Time, budget, tools, rules, risks, or things you cannot change."},
+      {name:"approach",label:"How should the answer help?",type:"select",options:["Recommend the best path","Compare possible approaches","Give me step-by-step actions","Find the simplest workaround"],value:"Recommend the best path"}
+    ]
+  },
+  workaround_suggester: {
+    name: "Workaround Finder", description: "Find practical alternatives when the normal path is blocked.",
+    fields: [
+      {name:"blocker",label:"What is blocked or not working?",type:"textarea",placeholder:"Explain the error, limitation, or obstacle.",required:true,rows:4},
+      {name:"goal",label:"What are you ultimately trying to achieve?",type:"textarea",placeholder:"Describe the end result, not just the tool or step." ,required:true},
+      {name:"available",label:"What can you use?",type:"textarea",placeholder:"Available tools, permissions, budget, skills, or time."},
+      {name:"risk",label:"Preferred trade-off",type:"select",options:["Simplest reliable workaround","Fastest practical option","Free or low-cost option","Most robust long-term fix"],value:"Simplest reliable workaround"}
+    ]
+  },
+  life_coach: {
+    name: "Personal Coach", description: "Think through a personal or work challenge and leave with a grounded next step.",
+    fields: [
+      {name:"situation",label:"What is going on?",type:"textarea",placeholder:"Share as much context as you are comfortable sharing.",required:true,rows:5},
+      {name:"goal",label:"What would you like to change or achieve?",type:"textarea",placeholder:"What would feel meaningfully better?"},
+      {name:"stuck_point",label:"What feels hardest right now?",type:"textarea",placeholder:"e.g. uncertainty, avoidance, competing priorities, a difficult conversation."},
+      {name:"style",label:"What kind of support would help?",type:"select",options:["Kind but direct","Practical action plan","Help me think it through","Encouraging and grounded"],value:"Kind but direct"}
+    ]
+  },
+  research_synthesizer: {
+    name: "Research & Compare", description: "Organize what is known, compare options, and identify what still needs verification.",
+    fields: [
+      {name:"question",label:"What do you need to understand?",type:"textarea",placeholder:"State the question or decision you are researching.",required:true},
+      {name:"options",label:"Options or context",type:"textarea",placeholder:"List options, relevant details, or material you already have."},
+      {name:"criteria",label:"What matters most?",type:"textarea",placeholder:"e.g. reliability, cost, ease, privacy, long-term value."},
+      {name:"format",label:"Best output format",type:"select",options:["Recommendation with reasoning","Comparison table","Concise briefing","Questions to investigate next"],value:"Recommendation with reasoning"}
+    ]
+  },
+  message_refiner: {
+    name: "Message Refiner", description: "Make a message more precise and expressive without changing what you mean.",
+    fields: [
+      {name:"message",label:"Your original message",type:"textarea",placeholder:"Paste the message or rough thought you want to express.",required:true,rows:6},
+      {name:"audience",label:"Who will read it?",type:"text",placeholder:"e.g. A colleague, friend, customer"},
+      {name:"purpose",label:"What should the message achieve?",type:"text",placeholder:"e.g. Explain, request, set a boundary, persuade"},
+      {name:"tone",label:"Tone",type:"select",options:["Natural and clear","Warm","Firm and respectful","Professional","Persuasive","Thoughtful"],value:"Natural and clear"},
+      {name:"variants",label:"Number of versions",type:"select",options:["1","3"],value:"3"}
+    ]
+  }
+};
+const $ = id => document.getElementById(id);
+function storageGet(key){try{return localStorage.getItem(key)||"";}catch{return "";}}
+function storageSet(key,value){try{localStorage.setItem(key,value);return true;}catch{return false;}}
+function storageRemove(key){try{localStorage.removeItem(key);}catch{}}
+let lastRequest = null, isBusy = false, lastRawResult = "";
+function renderTools(){
+  $("toolSelect").innerHTML = Object.entries(TOOLS).map(([id,t])=>`<option value="${id}">${escapeHTML(t.name)}</option>`).join("");
+  renderForm();
+}
+function escapeHTML(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function renderForm(){
+  const tool=TOOLS[$("toolSelect").value]; $("toolDescription").textContent=tool.description;
+  $("fields").innerHTML=tool.fields.map(f=>{
+    const id="field_"+f.name, required=f.required?' <span class="required">Required</span>':' <span class="required">Optional</span>';
+    let input="";
+    if(f.type==="textarea") input=`<textarea id="${id}" name="${f.name}" placeholder="${escapeHTML(f.placeholder||"")}" ${f.required?"required":""} rows="${f.rows||4}"></textarea>`;
+    else if(f.type==="select") input=`<select id="${id}" name="${f.name}">${f.options.map(o=>`<option ${o===(f.value||f.options[0])?"selected":""}>${escapeHTML(o)}</option>`).join("")}</select>`;
+    else input=`<input id="${id}" name="${f.name}" type="text" placeholder="${escapeHTML(f.placeholder||"")}" ${f.required?"required":""}>`;
+    return `<div class="field"><label for="${id}"><span>${escapeHTML(f.label)}</span>${required}</label>${input}</div>`;
+  }).join("");
+  $("formNotice").className="notice"; $("formNotice").textContent="";
+  const presetMap={
+    brief_generator:[['Feature request','Define a product feature with goals, requirements and success measures.'],['Project kickoff','Turn this idea into a brief with scope, deliverables and milestones.'],['AI task brief','Prepare a precise task brief for an AI assistant.']],
+    message_refiner:[['Sound more natural','Rewrite this so it sounds clear, natural and like a real person.'],['Set a boundary','Help me communicate a firm boundary respectfully.'],['Make it concise','Keep the meaning, remove repetition and make it concise.']],
+    webpage_builder:[['Landing page','Create a responsive landing page with a clear value proposition, benefits and one primary action.'],['Product page','Create a product page with features, use cases, FAQs and a clear next step.']],
+    thread_generator:[['Teach an idea','Explain one useful idea in a compelling sequence, with a strong opening and practical takeaway.'],['Share a lesson','Turn a lesson learned into a useful, non-clickbait thread.']],
+    cold_email:[['Warm introduction','Write a concise introduction that explains why I am reaching out and offers an easy next step.'],['Follow up','Draft a polite follow-up that adds context without sounding pushy.']],
+    problem_solver:[['Unblock a task','Help identify likely causes, practical options and the simplest next step.'],['Plan a project','Break the goal into a sensible sequence with risks and checkpoints.']],
+    workaround_suggester:[['Find another route','Suggest practical alternatives to the blocked approach, ranked by effort and reliability.'],['Fix an error','Help troubleshoot this error and give me the first thing to try.']],
+    research_synthesizer:[['Compare options','Compare the options against the criteria I care about and show the trade-offs.'],['Understand a topic','Give me a concise briefing with key points, uncertainties and follow-up questions.']],
+    prompt_architect:[['Research task','Create a prompt for careful research that separates evidence, assumptions and open questions.'],['Creative task','Create a prompt with a clear goal, audience, constraints and output format.']]
+  };
+  const presetArea=$("presetArea"); const presetsFor= presetMap[$("toolSelect").value]||[];
+  presetArea.innerHTML=presetsFor.length?'<div class="preset-label">Start with a shortcut</div>'+presetsFor.map((p,i)=>`<button type="button" class="preset-chip" aria-pressed="false" data-preset="${i}">${escapeHTML(p[0])}</button>`).join(""):"";
+  presetArea.querySelectorAll("[data-preset]").forEach(btn=>btn.addEventListener("click",()=>{const preset=presetsFor[Number(btn.dataset.preset)];presetArea.querySelectorAll("[data-preset]").forEach(b=>b.setAttribute("aria-pressed",String(b===btn)));const first=tool.fields.find(f=>["request","message","brief","topic","goal","objective","question","problem","blocker"].includes(f.name))||tool.fields.find(f=>f.type==="textarea");if(first){const el=$("field_"+first.name);if(el){el.value=preset[1];el.dispatchEvent(new Event("input",{bubbles:true}));el.focus();}}}));
+}
+function getFormData(){
+  const data={}; new FormData($("toolForm")).forEach((v,k)=>data[k]=String(v).trim()); return data;
+}
+const noticeTimers = Object.create(null);
+function showNotice(id,msg,type="error"){
+  const el=$(id); if(noticeTimers[id]) clearTimeout(noticeTimers[id]);
+  el.className="notice "+type; el.textContent=msg; el.setAttribute("role",type==="error"?"alert":"status"); el.setAttribute("aria-live",type==="error"?"assertive":"polite"); el.classList.remove("toast-out");
+  if(id==="resultNotice"){
+    // Errors are brief, non-blocking feedback. The form stays intact for another attempt.
+    noticeTimers[id]=setTimeout(()=>{el.classList.add("toast-out");setTimeout(()=>{if(el.classList.contains("toast-out")){el.className="notice";el.textContent="";}},220);},5200);
+  }
+}
+function hideNotice(id){
+  const el=$(id); if(noticeTimers[id]){clearTimeout(noticeTimers[id]);delete noticeTimers[id];}
+  el.className="notice";el.textContent="";
+}
+function setBusy(b){
+  isBusy=b; $("generateBtn").disabled=b; $("generateBtn").textContent=b?"Working…":"Generate result ↗";
+  $("loader").style.display=b?"flex":"none"; $("emptyState").style.display=b?"none":($("resultContent").style.display==="flex"?"none":"flex");
+  if(b){$("resultContent").style.display="none";hideNotice("resultNotice");}
+}
+
+function getPlainOutput(){return $("output").innerText || $("output").textContent || "";}
+function extractHTML(text){
+  let candidate=String(text||'').replace(/\r\n?/g,'\n').trim();
+  // Models sometimes wrap the document in a code fence, omit the closing fence, or add a short intro.
+  candidate=candidate.replace(/^\s*```(?:html|HTML)?\s*\n?/,'').replace(/\n?\s*```\s*$/,'').trim();
+  const start=candidate.search(/<!doctype\s+html|<html(?:\s|>)/i);
+  if(start>=0) candidate=candidate.slice(start);
+  // If an HTML document exists, keep it intact; never treat an explanatory paragraph as HTML.
+  return /<!doctype\s+html|<html(?:\s|>)/i.test(candidate) ? candidate : '';
+}
+function renderMarkdown(md){
+  const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  const inline=s=>esc(s).replace(/`([^`]+)`/g,'<code>$1</code>').replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/__(.+?)__/g,'<strong>$1</strong>').replace(/(^|[^*])\*([^*\n]+)\*(?!\*)/g,'$1<em>$2</em>').replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,'<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+  const lines=String(md||'').replace(/\r\n?/g,'\n').split('\n'); let out=[], i=0;
+  while(i<lines.length){let line=lines[i]; if(!line.trim()){i++;continue;}
+    const fence=line.match(/^\s*```([\w+-]*)\s*$/);
+    if(fence){let lang=fence[1], code=[];i++;while(i<lines.length&&!/^\s*```\s*$/.test(lines[i]))code.push(lines[i++]);if(i<lines.length)i++;out.push(`<pre><code class="language-${esc(lang)}">${esc(code.join('\n'))}</code></pre>`);continue;}
+    if(/^\s*\|.*\|\s*$/.test(line)&&i+1<lines.length&&/^\s*\|?\s*:?-{3,}/.test(lines[i+1])){
+      const cells=x=>x.trim().replace(/^\|/,'').replace(/\|$/,'').split('|').map(v=>v.trim());const head=cells(line);i+=2;let rows=[];
+      while(i<lines.length&&/^\s*\|.*\|\s*$/.test(lines[i])){rows.push(cells(lines[i]));i++;}
+      out.push(`<div class="table-wrap"><table><thead><tr>${head.map(c=>`<th>${inline(c)}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr>${head.map((_,j)=>`<td>${inline(r[j]||'')}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`);continue;
+    }
+    const hm=line.match(/^\s*(#{1,6})\s+(.+)$/);if(hm){let n=hm[1].length;out.push(`<h${n}>${inline(hm[2])}</h${n}>`);i++;continue;}
+    if(/^\s*([-*_])\1\1+\s*$/.test(line)){out.push('<hr>');i++;continue;}
+    if(/^\s*>/.test(line)){let q=[];while(i<lines.length&&/^\s*>/.test(lines[i]))q.push(inline(lines[i++].replace(/^\s*>\s?/,'')));out.push(`<blockquote>${q.join('<br>')}</blockquote>`);continue;}
+    if(/^\s*[-*+]\s+/.test(line)){let items=[];while(i<lines.length&&/^\s*[-*+]\s+/.test(lines[i]))items.push(`<li>${inline(lines[i++].replace(/^\s*[-*+]\s+/,''))}</li>`);out.push(`<ul>${items.join('')}</ul>`);continue;}
+    if(/^\s*\d+[.)]\s+/.test(line)){let items=[];while(i<lines.length&&/^\s*\d+[.)]\s+/.test(lines[i]))items.push(`<li>${inline(lines[i++].replace(/^\s*\d+[.)]\s+/,''))}</li>`);out.push(`<ol>${items.join('')}</ol>`);continue;}
+    let para=[line.trim()];i++;while(i<lines.length&&lines[i].trim()&&!/^\s*(#{1,6}\s|```|[-*+]\s+|\d+[.)]\s+|>|\|.*\|\s*$)/.test(lines[i]))para.push(lines[i++].trim());out.push(`<p>${para.map(inline).join('<br>')}</p>`);
+  }
+  return `<div class="rendered-markdown">${out.join('\n')}</div>`;
+}
+function configureOutput(toolType,raw){
+  const htmlCode=toolType==='webpage_builder'?extractHTML(raw):'';
+  const looksMarkdown=/^\s*#{1,6}\s|\*\*|^\s*[-*+]\s|^\s*\d+[.)]\s|^\s*\|.*\|\s*$/m.test(raw);
+  const showPreview=!!htmlCode || looksMarkdown || toolType==='cold_email' || toolType==='thread_generator' || toolType==='message_refiner';
+  $('previewTabs').style.display=showPreview?'flex':'none'; $('htmlPreview').style.display='none'; $('markdownPreview').style.display='none'; $('output').style.display='block';
+  $('output').classList.add('source-output'); $('output').textContent=htmlCode?htmlCode:raw; $('output').contentEditable='false';
+  $('copyBtn').textContent=toolType==='webpage_builder'?'Copy HTML':toolType==='prompt_architect'?'Copy prompt':'Copy text';
+  $('downloadBtn').style.display='inline-block'; $('downloadBtn').textContent=toolType==='webpage_builder'?'Download HTML':(looksMarkdown?'Download Markdown':'Download text');
+  $('emailBtn').style.display=toolType==='cold_email'?'inline-block':'none'; $('previewTab').textContent='Preview'; $('sourceTab').textContent=htmlCode?'Source':'Text';
+  // Keep the generated document mounted in the iframe. Reassigning srcdoc on
+  // every tab switch can cause some browsers to reset the document and show a blank frame.
+  if(htmlCode && $('htmlPreview').dataset.renderedHtml!==htmlCode){
+    $('htmlPreview').srcdoc=htmlCode;
+    $('htmlPreview').dataset.renderedHtml=htmlCode;
+  }
+  if(!htmlCode && showPreview) $('markdownPreview').innerHTML=renderMarkdown(raw);
+  $('previewTab').onclick=()=>{
+    $('output').style.display='none';
+    $('htmlPreview').style.display='none';
+    $('markdownPreview').style.display='none';
+    if(htmlCode){
+      $('htmlPreview').style.display='block';
+      $('htmlPreview').style.visibility='visible';
+      // Nudge layout after display changes so the iframe reliably paints again.
+      void $('htmlPreview').offsetHeight;
+    } else {
+      $('markdownPreview').style.display='block';
+    }
+    $('previewTab').classList.add('active');$('sourceTab').classList.remove('active');
+  };
+  $('sourceTab').onclick=()=>{
+    $('htmlPreview').style.display='none';$('markdownPreview').style.display='none';
+    $('output').style.display='block';
+    $('previewTab').classList.remove('active');$('sourceTab').classList.add('active');
+  };
+  if(showPreview){$('previewTab').classList.add('active');$('sourceTab').classList.remove('active');$('previewTab').click();} else {$('previewTabs').style.display='none';}
+}
+async function generate(){
+  if(isBusy)return;
+  const url=storageGet("promptless_webhook_url");
+  if(!url){showNotice("formNotice","One quick setup step: connect your workflow in Settings, then you’re ready to go.");openSettings();return;}
+  if(!$("toolForm").reportValidity())return;
+  const toolType=$("toolSelect").value, input=getFormData();
+  lastRequest={toolType,input}; await submitRequest(lastRequest,url);
+}
+function unwrapWorkflowResponse(value){
+  // n8n versions and response nodes can return the same result at different nesting levels.
+  let current=value;
+  for(let i=0;i<5;i++){
+    if(Array.isArray(current)){if(!current.length)return null;current=current[0];continue;}
+    if(!current||typeof current!=="object")return current;
+    if(current.success===false)return current;
+    if(current.result!=null){current=current.result;continue;}
+    if(current.body!=null){current=current.body;continue;}
+    if(current.data!=null){current=current.data;continue;}
+    if(current.response!=null){current=current.response;continue;}
+    if(current.output!=null||current.content!=null||current.text!=null)return current;
+    return current;
+  }
+  return current;
+}
+function extractWorkflowText(data){
+  const unwrapped=unwrapWorkflowResponse(data);
+  if(typeof unwrapped==="string")return unwrapped.trim();
+  if(unwrapped&&typeof unwrapped==="object"){
+    for(const key of ["content","text","output","answer","completion","message"]){
+      if(typeof unwrapped[key]==="string"&&unwrapped[key].trim())return unwrapped[key].trim();
+    }
+    if(unwrapped.result!=null){
+      const nested=extractWorkflowText(unwrapped.result);if(nested)return nested;
+    }
+  }
+  return "";
+}
+async function submitRequest(payload,url){
+  setBusy(true); hideNotice("resultNotice");
+  $("loaderText").textContent=`Running ${TOOLS[payload.toolType].name}…`;
+  try{
+    const response=await fetch(url,{method:"POST",mode:"cors",credentials:"omit",cache:"no-store",headers:{"Content-Type":"application/json","Accept":"application/json, text/plain, */*"},body:JSON.stringify(payload)});
+    const raw=await response.text(); let data=null; let parsed=false;
+    try{data=JSON.parse(raw);parsed=true;}catch(_){/* Some webhook configurations return plain text. Handle it below. */}
+    if(!response.ok){
+      console.error("Promptless workflow request failed",{status:response.status,body:raw.slice(0,800)});
+      if(response.status===404)throw new Error("This tool connection needs a quick check. Open Settings and confirm your Promptless webhook URL.");
+      if(response.status>=500)throw new Error("We hit a snag while making your result. Your details are still here. Try again shortly.");
+      throw new Error("That request couldn’t be completed. Check the details and try again.");
+    }
+    if(parsed&&data&&typeof data==="object"&&data.success===false){
+      const serverError=String(data.error||data.message||"");
+      console.error("Promptless workflow returned a handled error",{toolType:payload.toolType,error:serverError});
+      if(/unknown tooltype|supported .* tool/i.test(serverError))throw new Error("This tool needs a refresh. Reload Promptless and try again.");
+      if(/required field|please provide|missing/i.test(serverError))throw new Error("A couple of details are missing. Check the highlighted fields and try again.");
+      throw new Error("We couldn’t finish that just yet. Your details are still here. Give it another try.");
+    }
+    let result=parsed?extractWorkflowText(data):"";
+    // Accept a plain-text response as a valid result, but never display an HTML error page as the answer.
+    if(!result&&!parsed&&raw.trim()&&!/<(!doctype\s+html|html[\s>])/i.test(raw)&&!/^\s*\{\s*"(?:error|message)"/i.test(raw))result=raw.trim();
+    if(!result){
+      console.error("Promptless received an empty or unrecognised response",{status:response.status,contentType:response.headers.get("content-type"),body:raw.slice(0,800)});
+      throw new Error("We couldn’t get a usable result this time. Your details are still here. Try once more.");
+    }
+    lastRawResult=result; configureOutput(payload.toolType,lastRawResult); $("resultToolName").textContent=TOOLS[payload.toolType].name;
+    $("resultContent").style.display="flex"; $("emptyState").style.display="none"; $("resultStatus").textContent="Ready to use"; hideNotice("resultNotice"); $("retryRow").style.display="none";
+  }catch(err){
+    $("resultContent").style.display="none"; $("emptyState").style.display="flex";
+    let msg=err.message||"Something went wrong. Please try again.";
+    if(err instanceof TypeError||/Failed to fetch|NetworkError|Load failed/i.test(msg))msg="We can’t reach your workflow right now. Check your connection and try again.";
+    showNotice("resultNotice",msg,"error"); $("retryRow").style.display="none";
+  }finally{setBusy(false);if($("resultContent").style.display==="flex")$("emptyState").style.display="none";}
+}
+function openSettings(){$("webhookUrl").value=storageGet("promptless_webhook_url");$("settingsBackdrop").classList.add("open");hideNotice("settingsNotice");}
+function closeSettings(){$("settingsBackdrop").classList.remove("open");}
+function updateConnection(){const u=storageGet("promptless_webhook_url");$("connectionLabel").textContent=u?"Webhook connected":"Webhook not configured";$("connectionLabel").style.color=u?"#47762b":"#70736d";}
+$("toolSelect").addEventListener("change",renderForm);
+$("toolForm").addEventListener("submit",e=>{e.preventDefault();generate();});
+$("openSettings").addEventListener("click",openSettings);$("cancelSettings").addEventListener("click",closeSettings);
+$("saveSettings").addEventListener("click",()=>{
+ const v=$("webhookUrl").value.trim();
+ if(!v){storageRemove("promptless_webhook_url");updateConnection();closeSettings();return;}
+ try{const u=new URL(v);if(!["http:","https:"].includes(u.protocol)||u.username||u.password)throw new Error();if(location.protocol==="https:"&&u.protocol==="http:")throw new Error("mixed-content");if(!storageSet("promptless_webhook_url",u.href)){showNotice("settingsNotice","Your browser couldn’t save this connection. Check its storage settings and try again.");return;}updateConnection();closeSettings();showNotice("formNotice","Connection saved in this browser.","info");}
+ catch(err){showNotice("settingsNotice",err?.message==="mixed-content"?"Use the secure HTTPS connection address for your webhook.":"Enter a valid webhook address beginning with https:// (or http:// for local testing).");}
+});
+$("settingsBackdrop").addEventListener("click",e=>{if(e.target===$("settingsBackdrop"))closeSettings();});
+$("copyBtn").addEventListener("click",async()=>{try{const content=lastRequest?.toolType==="webpage_builder"?(extractHTML(lastRawResult)||lastRawResult):lastRawResult;await navigator.clipboard.writeText(content);$("copyBtn").textContent="Copied ✓";setTimeout(()=>$("copyBtn").textContent=lastRequest?.toolType==="webpage_builder"?"Copy HTML":"Copy text",1500);}catch{showNotice("resultNotice","Copy didn’t work in this browser. Select the result and copy it instead.","info");}});
+$("downloadBtn").addEventListener("click",()=>{const type=lastRequest?.toolType||"result";let content=lastRawResult,filename="promptless-result.txt",mime="text/plain;charset=utf-8";if(type==="webpage_builder"){content=extractHTML(content)||content;filename="index.html";mime="text/html;charset=utf-8";}else if(["research_synthesizer","prompt_architect","brief_generator","problem_solver","workaround_suggester","life_coach"].includes(type)){filename=`promptless-${type.replace(/_/g,"-")}.md`;mime="text/markdown;charset=utf-8";}else if(type==="cold_email")filename="email-draft.txt";const blob=new Blob([content],{type:mime}),a=document.createElement("a"),u=URL.createObjectURL(blob);a.href=u;a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),1000);});
+$("emailBtn").addEventListener("click",()=>{let body=String(lastRawResult||'').trim();let subject='';const match=body.match(/^\s*(?:\*\*Subject:\*\*|Subject:)\s*(.+)\s*$/im);if(match){subject=match[1].replace(/\*+/g,'').trim();body=body.replace(match[0],'').replace(/^\s+/, '').trim();}window.location.href=`mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;});
+$("regenerateBtn").addEventListener("click",()=>{if(lastRequest){const url=localStorage.getItem("promptless_webhook_url");if(url)submitRequest(lastRequest,url);}});
+$("retryBtn").addEventListener("click",()=>{if(lastRequest){const url=localStorage.getItem("promptless_webhook_url");if(url)submitRequest(lastRequest,url);else openSettings();}});
+$("clearBtn").addEventListener("click",()=>{lastRawResult="";lastRequest=null;$("output").textContent="";$("resultContent").style.display="none";$("emptyState").style.display="flex";hideNotice("resultNotice");});
+function toggleResultExpanded(force){
+  const panel=document.querySelector(".result-panel");
+  const expanded=typeof force==="boolean"?force:!panel.classList.contains("is-expanded");
+  panel.classList.toggle("is-expanded",expanded);
+  document.body.classList.toggle("promptless-expanded",expanded);
+  $("expandResult").setAttribute("aria-pressed",String(expanded));
+  $("expandResult").setAttribute("aria-label",expanded?"Exit full screen":"Open result full screen");
+  $("expandResult").title=expanded?"Exit full screen":"Open result full screen";
+  $("expandResult").textContent=expanded?"⤡":"⤢";
+  if(expanded) panel.scrollTop=0;
+}
+$("expandResult").addEventListener("click",()=>toggleResultExpanded());
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&document.querySelector(".result-panel.is-expanded"))toggleResultExpanded(false);});
+document.addEventListener("keydown",e=>{if((e.ctrlKey||e.metaKey)&&e.key==="Enter"){e.preventDefault();generate();}if(e.key==="Escape")closeSettings();});
+renderTools();updateConnection();
+
+// Replay the intro on every document load and every pageshow event, including
+// BFCache restores (Back/Forward) where the browser may restore the old DOM.
+// Intentionally do not persist an "already seen" flag in any storage.
+(function initPromptlessIntro(){
+  const shell=document.getElementById('productShell');
+  const initialIntro=document.getElementById('promptlessIntro');
+  if(!shell||!initialIntro)return;
+  const introMarkup=initialIntro.outerHTML;
+  const reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let timer=null;
+  let finished=false;
+
+  function playIntro(){
+    if(timer!==null){window.clearTimeout(timer);timer=null;}
+    finished=false;
+    let current=document.getElementById('promptlessIntro');
+    if(!current){
+      shell.insertAdjacentHTML('beforebegin',introMarkup);
+      current=document.getElementById('promptlessIntro');
+    } else {
+      // Replace with a fresh node so all CSS animations restart on BFCache restore.
+      const fresh=document.createElement('div');
+      fresh.innerHTML=introMarkup;
+      const replacement=fresh.firstElementChild;
+      current.replaceWith(replacement);
+      current=replacement;
+    }
+    const skip=current.querySelector('#skipIntro');
+    const finish=()=>{
+      if(finished)return;
+      finished=true;
+      if(timer!==null){window.clearTimeout(timer);timer=null;}
+      current.classList.add('is-leaving');
+      window.setTimeout(()=>{if(current.isConnected)current.remove();},reduced?0:520);
+    };
+    skip.addEventListener('click',finish,{once:true});
+    const onKey=e=>{
+      if(e.key==='Escape'&&!finished){finish();document.removeEventListener('keydown',onKey);}
+    };
+    document.addEventListener('keydown',onKey);
+    timer=window.setTimeout(()=>{
+      finish();document.removeEventListener('keydown',onKey);
+    },reduced?2600:6100);
+  }
+
+  // pageshow runs on initial navigation and when a cached page is restored.
+  window.addEventListener('pageshow',playIntro);
+})();
+
+</script>
+</body>
+</html>
