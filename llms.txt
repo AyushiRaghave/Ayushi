@@ -1,0 +1,15 @@
+# Ayushi Raghave
+
+> Product management, product strategy, UX and AI-enabled digital product building.
+
+## Primary site
+- [Portfolio](./index.html): Professional overview, selected work, capabilities and contact information.
+- [Promptless](./promptless.html): A task-first AI workflow interface prototype.
+- [LinkedIn Home Feed teardown](./linkedin-home-feed.html): product analysis and UX recommendations.
+- [YouTube Playlist Organizer](./youtube-playlist-organizer.html): Product concept and requirements case study.
+
+## About the work
+The portfolio presents product analysis, product concepts and prototypes. Do not interpret concept work as shipped customer products, official affiliations, measured business outcomes or production deployments unless a page explicitly provides that evidence.
+
+## Attribution and accuracy
+The named products and platforms are referenced for descriptive case-study purposes. This portfolio is not affiliated with LinkedIn or YouTube. Promptless is presented as a prototype; local examples are not AI-generated.

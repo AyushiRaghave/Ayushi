@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /docs/
+Disallow: /scripts/
+# Sitemap is generated after the production domain is configured.
