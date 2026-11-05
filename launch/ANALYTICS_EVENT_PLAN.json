@@ -1,0 +1,17 @@
+{
+  "purpose": "Measure portfolio discovery and meaningful intent without collecting unnecessary personal data.",
+  "status": "Specification only; no analytics provider or tracking script is installed.",
+  "events": [
+    {"name": "project_open", "trigger": "Visitor opens a project page or project detail", "properties": ["project_slug", "source_page"], "avoid": ["free-text input", "email", "name"]},
+    {"name": "promptless_open", "trigger": "Visitor opens the Promptless project page", "properties": ["source_page"], "avoid": ["form content", "webhook URL", "generated output"]},
+    {"name": "contact_intent", "trigger": "Visitor activates a contact action", "properties": ["contact_method", "source_page"], "avoid": ["recipient address", "message body"]},
+    {"name": "external_profile_open", "trigger": "Visitor opens the LinkedIn profile", "properties": ["source_page"], "avoid": ["personal identifiers"]}
+  ],
+  "privacy_requirements": [
+    "Do not collect contact form contents or Promptless task content in analytics.",
+    "Do not include names, email addresses, phone numbers, webhook URLs or generated outputs in event properties.",
+    "Select a provider only after reviewing consent requirements, data residency, retention and deletion controls.",
+    "If consent is required, do not load analytics before consent.",
+    "Prefer aggregate reporting and short retention periods."
+  ]
+}
